@@ -1,0 +1,57 @@
+
+
+--- pseucodigo para Pseint ----
+
+
+Proceso Evolucion_IPC_Farmaceutico
+    // Declarar arreglos
+    Dimension trimestres[8], facturacion[8]
+    Definir trimestres, facturacion Como Real
+    Definir i Como Entero
+    Definir m, b, sumaX, sumaY, sumaXY, sumaX2 Como Real
+    Definir prediccion Como Real
+    Definir trimestre_futuro Como Entero
+
+    // Cargar datos reales (indexados desde 1 a 8)
+    trimestres[1] <- 1
+    trimestres[2] <- 2
+    trimestres[3] <- 3
+    trimestres[4] <- 4
+    trimestres[5] <- 5
+    trimestres[6] <- 6
+    trimestres[7] <- 7
+    trimestres[8] <- 8
+
+    facturacion[1] <- 299316.4
+    facturacion[2] <- 402474.4
+    facturacion[3] <- 578164.6
+    facturacion[4] <- 829789.3
+    facturacion[5] <- 1320339.5
+    facturacion[6] <- 1717379.4
+    facturacion[7] <- 2169572.4
+    facturacion[8] <- 2281137.9
+
+    // Calcular pendiente m y ordenada b (regresión lineal simple)
+    sumaX <- 0
+    sumaY <- 0
+    sumaXY <- 0
+    sumaX2 <- 0
+
+    Para i <- 1 Hasta 8 Con Paso 1
+        sumaX <- sumaX + trimestres[i]
+        sumaY <- sumaY + facturacion[i]
+        sumaXY <- sumaXY + trimestres[i] * facturacion[i]
+        sumaX2 <- sumaX2 + trimestres[i] * trimestres[i]
+    FinPara
+
+    m <- (8 * sumaXY - sumaX * sumaY) / (8 * sumaX2 - sumaX * sumaX)
+    b <- (sumaY - m * sumaX) / 8
+
+    Escribir "Función estimada: y = ", m, " * x + ", b
+
+    // Predecir para trimestre futuro
+    Escribir "Ingrese el número de trimestre futuro (ej: 9 para 2025-T1):"
+    Leer trimestre_futuro
+    prediccion <- m * trimestre_futuro + b
+    Escribir "Predicción de facturación para T", trimestre_futuro, ": ", prediccion, " millones de $"
+FinProceso
